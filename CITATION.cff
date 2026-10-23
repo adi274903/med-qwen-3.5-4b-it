@@ -1,0 +1,16 @@
+cff-version: 1.2.0
+message: "If you use this model or code, please cite it as below, and cite the base model and the datasets and benchmarks you rely on (see CITATIONS.md)."
+type: software
+title: "Med-Qwen-3.5-4B-it: a 4B medical question-answering model with short reasoning (DAPT, SFT, GRPO with verifiable rewards)"
+authors:
+  - family-names: Sannabhadti
+    given-names: Aditya
+repository-code: "https://github.com/adi274903/med-qwen-3.5-4b-it"
+url: "https://huggingface.co/adi274903/Med-Qwen-3.5-4B-it"
+license: Apache-2.0
+keywords:
+  - medical question answering
+  - small language model
+  - GRPO
+  - reinforcement learning with verifiable rewards
+  - domain-adaptive pretraining

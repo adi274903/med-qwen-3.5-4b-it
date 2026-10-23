@@ -349,14 +349,14 @@ and near-verbatim copies. It does not find paraphrased or reformatted copies.
 | Data | Overlapping | Detail |
 |---|---|---|
 | RLVR prompt pool (used for the released RLVR adapter), rebuilt from the same sources for the audit | **50 of 192,248 unique prompts (0.03%)** | multiple-choice 47 of 51,285 (0.09%), PubMedQA-style 0 of 19,999, math 0 of 27,441, general 3 of 93,523. By source: MedQA-train 46 of 10,178 (0.45%), medical-o1 3 of 19,704, MedMCQA-train 1 of 39,989 |
+| SFT-stage sources (`pipeline/sft_a`), checked source by source | about **47 rows, about 0.02% of the mix** | `medical_meadow_medqa` (10,178 rows, the same size as the MedQA train split): **44 rows (0.43%)** overlap a MedQA test question, the same count the MedQA train split itself shows under this filter, so this is MedQA's own near-duplication between its train and test splits and no full test question appears in it. medical-o1-reasoning-SFT: 3 of 19,704 rows, and II-Medical, AlpaCare, UltraChat and Orca-Math: none flagged, from the earlier per-source audit run with slightly different row caps. The exact SFT cache was not rebuilt for this audit |
 | SFT C training data | 50 rows removed before training | the same sources and the same split: 46 MedQA-train, 3 medical-o1, 1 MedMCQA-train. The SFT C and RLVR-C models were trained without them |
 
 The RLVR-C-noDAPT run used a prompt pool with those 50 prompts filtered out; the released DAPT and no-DAPT RLVR runs used the unfiltered pool. Since the pool
 is 99.97% clean, the difference between the runs is not explained by contamination.
 
 **Not measured**
-- The SFT A training data (the data behind the released SFT adapter) was **not** checked with this filter. It was built from largely the same public sources
-  as the SFT C data, so a similar rate is plausible, but that is an assumption.
+- The exact SFT A cache was not rebuilt, so its overlap is estimated from its sources (see the table), not counted on the cache itself. The sources, caps and filters match closely but not exactly.
 - The DAPT corpus was not checked.
 - Paraphrased overlap was not checked for any data.
 
@@ -375,7 +375,7 @@ benchmarks above are therefore in-distribution for this model. That is standard 
 - **Run-to-run variation.** The RLVR model was evaluated twice with the same settings. Most numbers moved by 0.1 to 0.2 points, but GPQA Diamond
   moved from 45.5% to 41.9% (7 questions out of 198), probably from non-deterministic batching in vLLM. Differences of a few points on small benchmarks
   are within this noise.
-- **Contamination was audited only for verbatim matches, and not for all data.** See the Benchmark overlap section: the RLVR prompt pool is 99.97% clean at 30 words, but the SFT A data and the DAPT corpus were not audited.
+- **Contamination was audited only for verbatim matches, and not for all data.** See the Benchmark overlap section: the RLVR prompt pool is 99.97% clean at 30 words and the SFT sources show a similar rate, but the DAPT corpus was not audited and the exact SFT cache was estimated from its sources.
 - **Short reasoning.** The efficiency reward drove reasoning down to roughly the minimum allowed length. This is fine on exam-style
   questions but may be a weakness on problems that need long, multi-step reasoning (see GPQA).
 - **No safety tuning for clinical use.** The model can state incorrect facts confidently and was not evaluated for bias, calibration,
@@ -389,6 +389,20 @@ benchmarks above are therefore in-distribution for this model. That is standard 
 Apache License 2.0 (see [`LICENSE`](LICENSE) and [`NOTICE`](NOTICE)). The model is a modified derivative of Qwen3.5-4B-Base (Apache-2.0).
 Datasets and benchmarks used for training and evaluation keep their own licenses and are not redistributed here.
 
-## Citation
+## Citation and references
 
-If you use this model, please cite the repository and the Qwen3.5 base model.
+If you use this model or code, please cite it (GitHub also offers "Cite this repository" from [`CITATION.cff`](CITATION.cff)):
+
+```bibtex
+@misc{sannabhadti2026medqwen,
+  title  = {Med-Qwen-3.5-4B-it: a 4B medical question-answering model with short reasoning (DAPT, SFT, GRPO with verifiable rewards)},
+  author = {Sannabhadti, Aditya},
+  year   = {2026},
+  url    = {https://github.com/adi274903/med-qwen-3.5-4b-it},
+  note   = {Model: https://huggingface.co/adi274903/Med-Qwen-3.5-4B-it}
+}
+```
+
+This work builds on Qwen3.5-4B-Base (Qwen Team) and on public datasets and benchmarks (among them MedQA, MedMCQA, PubMedQA, MMLU, GPQA, GSM8K, medical-o1-reasoning-SFT,
+II-Medical-Reasoning-SFT, AlpaCare, UltraChat and Orca-Math), and on LoRA, DoRA, GRPO and RLVR. Full references with links and where each is used are in
+[`CITATIONS.md`](CITATIONS.md); BibTeX for all of them is in [`references.bib`](references.bib). Please cite the base model and any dataset or benchmark whose numbers you report.
