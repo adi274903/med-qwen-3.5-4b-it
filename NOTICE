@@ -1,0 +1,10 @@
+Med-Qwen-3.5-4B-it
+Copyright 2026 Aditya Sannabhadti
+
+Licensed under the Apache License, Version 2.0 (see LICENSE).
+
+This project is a derivative work. The model starts from Qwen3.5-4B-Base (Qwen Team, Alibaba Cloud), which is released under the
+Apache License, Version 2.0. It was modified by domain-adaptive pretraining, supervised fine-tuning and reinforcement learning with
+verifiable rewards (GRPO); the weights are not the original Qwen weights.
+
+Training and evaluation use third-party datasets and benchmarks that carry their own licenses and terms; they are not redistributed here.

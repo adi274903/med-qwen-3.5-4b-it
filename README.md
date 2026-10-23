@@ -384,6 +384,11 @@ benchmarks above are therefore in-distribution for this model. That is standard 
 - **The no-DAPT ablation is a proxy.** SFT A was trained on DAPT-merged weights and applied to the plain base for the noDAPT arms. SFT C is a clean no-DAPT pipeline but uses a different SFT dataset, and a matched DAPT arm on that dataset was not run.
 - **English only**, and text only.
 
+## License
+
+Apache License 2.0 (see [`LICENSE`](LICENSE) and [`NOTICE`](NOTICE)). The model is a modified derivative of Qwen3.5-4B-Base (Apache-2.0).
+Datasets and benchmarks used for training and evaluation keep their own licenses and are not redistributed here.
+
 ## Citation
 
 If you use this model, please cite the repository and the Qwen3.5 base model.
